@@ -18,6 +18,7 @@ server.py contains contributions from:
 * Eddie Antonio Santos
 * Jackson Z Chang
 * Mandy Meindersma 
+* Aaron Zhang
 
 But the server.py example is derived from the python documentation
 examples thus some of the code is Copyright © 2001-2013 Python
@@ -32,4 +33,4 @@ Aaron Zhang
 
 CCID: bolun1
 
-Collaborators: ShiNing Le, Zezhou Xiong
+Collaborators: Shi Ning Le
