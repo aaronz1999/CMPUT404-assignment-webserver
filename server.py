@@ -37,39 +37,47 @@ class MyWebServer(socketserver.BaseRequestHandler):
         requested_path = decoded_data[1]
         method = decoded_data[0]
         #print(decoded_data)
-        if method != 'GET':
-            self.request.sendall(bytearray("HTTP/1.1 405 Method Not Allowed\r\n",'utf-8'))
-        else:
-            my_path = os.path.join(os.getcwd()+'/www' + requested_path)
-            if os.path.isfile(my_path):
-                if ".html" in requested_path:
-                    f = open(my_path)
-                    file = f.read()
-                    self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/html\r\n\r\n{file}",'utf-8'))
-                    f.close()
-                elif ".css" in requested_path:
-                    f = open(my_path)
-                    file = f.read()
-                    self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/css\r\n\r\n{file}",'utf-8'))
-                    f.close()
-                else:
-                    self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
-            elif os.path.isdir(my_path):
-                if my_path.endswith("/"):
-                    change_path = requested_path + "index.html"
-                    new_path = os.path.join(os.getcwd()+'/www' + change_path)
-                    f = open(new_path)
-                    file = f.read()
-                    self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/html\r\n\r\n{file}",'utf-8'))
-                    f.close()
-                elif "/." or "/.." in requested_path:
-                    self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
-                else:
-                    change_path = requested_path + '/'
-                    self.request.sendall(
-                        bytearray("HTTP/1.1 301 Moved Permanently\r\nLocation: http://127.0.0.1:8080%s\r\n" % (change_path), 'utf-8'))
-            else:
+        #check if method is get, and execute if it is
+        if method == 'GET':
+            #handling test case
+            if "/." or "/.." in requested_path:
                 self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
+            else:
+                my_path = os.path.join(os.getcwd()+'/www' + requested_path)
+                #handle if the requested end with a file or a directory
+                if os.path.isfile(my_path):
+                    #handle html and css files, return 404 if file invalid
+                    if ".html" in requested_path:
+                        f = open(my_path)
+                        file = f.read()
+                        self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/html\r\n\r\n{file}",'utf-8'))
+                        f.close()
+                    elif ".css" in requested_path:
+                        f = open(my_path)
+                        file = f.read()
+                        self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/css\r\n\r\n{file}",'utf-8'))
+                        f.close()
+                    else:
+                        self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
+                elif os.path.isdir(my_path):
+                    #301 redirect if / does not present in end of path, handle otherwise
+                    if not my_path.endswith("/"):
+                        change_path = requested_path + '/'
+                        self.request.sendall(bytearray("HTTP/1.1 301 Moved Permanently\r\nLocation: http://127.0.0.1:8080%s\r\n" % (change_path), 'utf-8'))
+                    else:
+                        change_path = requested_path + "index.html"
+                        new_path = os.path.join(os.getcwd()+'/www' + change_path)
+                        f = open(new_path)
+                        file = f.read()
+                        self.request.sendall(bytearray(f"HTTP/1.1 200 OK\r\ncontent-type: text/html\r\n\r\n{file}",'utf-8'))
+                        f.close()
+                #return 404 if no file or directory found
+                else:
+                    self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
+        #return 405 if method is not get
+        else:
+            self.request.sendall(bytearray("HTTP/1.1 405 Method Not Allowed\r\n",'utf-8'))
+            
 
 
 
