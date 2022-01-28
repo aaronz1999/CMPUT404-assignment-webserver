@@ -40,7 +40,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
         #check if method is get, and execute if it is
         if method == 'GET':
             #handling test case
-            if "/." or "/.." in requested_path:
+            if "/." in requested_path or "/.." in requested_path:
                 self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n",'utf-8'))
             else:
                 my_path = os.path.join(os.getcwd()+'/www' + requested_path)
@@ -77,11 +77,6 @@ class MyWebServer(socketserver.BaseRequestHandler):
         #return 405 if method is not get
         else:
             self.request.sendall(bytearray("HTTP/1.1 405 Method Not Allowed\r\n",'utf-8'))
-            
-
-
-
-
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 8080
