@@ -34,3 +34,11 @@ Aaron Zhang
 CCID: bolun1
 
 Collaborators: Shi Ning Le
+
+References:
+
+https://docs.python.org/3/library/os.path.html
+
+https://www.geeksforgeeks.org/file-handling-python/
+
+https://www.tutorialspoint.com/python/os_getcwd.htm
