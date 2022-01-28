@@ -24,3 +24,9 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+Assignment 1
+============
+CMPUT 404 - Winter 2021
+Aaron Zhang
+CCID: bolun1
+Collaborators: ShiNing Le, Zezhou Xiong
