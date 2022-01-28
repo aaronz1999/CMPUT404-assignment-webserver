@@ -27,6 +27,9 @@ compatible) http://docs.python.org/2/library/socketserver.html
 Assignment 1
 ============
 CMPUT 404 - Winter 2021
+
 Aaron Zhang
+
 CCID: bolun1
+
 Collaborators: ShiNing Le, Zezhou Xiong
